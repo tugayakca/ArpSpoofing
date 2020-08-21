@@ -17,6 +17,7 @@ def get_mac(ip):
     # verbose=false  dont allows to write unnecassary words
    # print(answered_list.summary())  # to check output
     return (answered_list[0][1].hwsrc)
+# update
 
 
 def spoof(target_ip, spoof_ip):
